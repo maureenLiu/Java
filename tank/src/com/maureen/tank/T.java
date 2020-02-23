@@ -7,20 +7,8 @@ import java.awt.event.WindowEvent;
 public class T {
 
 	public static void main(String[] args) {
-		Frame f = new Frame();
-		f.setSize(800,600);
-		f.setResizable(false);
-		f.setTitle("Tank war");
-		f.setVisible(true);
+		TankFrame tf = new TankFrame();
 		
-		f.addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-			
-		});
 	}
 
 }
