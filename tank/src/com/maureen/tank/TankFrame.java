@@ -14,11 +14,13 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 	
-	Tank myTank = new Tank(200,200,Dir.DOWN, this);
+	Tank myTank = new Tank(200,400,Dir.DOWN, this);
 	List<Bullet> bullets = new ArrayList<>();
-	Bullet bullet = new Bullet(300,300,Dir.DOWN,this);
+	List<Tank> enemies = new ArrayList<>();
 	static final int GAME_WIDTH = 800;
 	static final int GAME_HEIGHT = 600;
+	
+	
 	
 	public TankFrame( ) {
 		setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -60,9 +62,13 @@ public class TankFrame extends Frame {
 		g.setColor(c);
 		
 		myTank.paint(g);
-		for(int i = 0; i< bullets.size(); i++) {
+		for(int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		} 
+		
+		for(int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).paint(g);
+		}
 		
 //		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
 //			Bullet b = it.next();
