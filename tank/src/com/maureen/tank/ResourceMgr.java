@@ -1,0 +1,22 @@
+package com.maureen.tank;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class ResourceMgr {
+	public static BufferedImage tankL, tankU, tankR,tankD;
+	
+	static { //当ResourceMgr.class文件被load到内存的时候，静态语句块自动执行，BufferedImage就被初始化了
+		try { //四张图片全部被load到了内存中
+			tankL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
+			tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
+			tankR = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
+			tankD = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankD.gif"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
