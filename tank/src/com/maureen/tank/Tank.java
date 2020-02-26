@@ -2,13 +2,15 @@ package com.maureen.tank;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Tank {
 	private static final int SPEED = 3;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
 	public static int HEIGHT = ResourceMgr.goodTankD.getHeight();
-
+	Rectangle rect = new  Rectangle();
+	
 	private Random random = new Random();
 	private int x, y;
 
@@ -27,6 +29,11 @@ public class Tank {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+		
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = this.WIDTH;
+		rect.height = this.HEIGHT;
 	}
 
 	public void die() {
@@ -82,12 +89,17 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-
+		
 		if (this.group == Group.BAD && random.nextInt(100) > 95)
 			this.fire();
 		if (this.group == Group.BAD && random.nextInt(100) > 95)
 			randomDir();
+		
 		boundsCheck();
+		//update rect
+		rect.x = this.x;
+		rect.y = this.y;
+
 	}
 
 	private void boundsCheck() {
