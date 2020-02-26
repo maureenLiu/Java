@@ -17,10 +17,11 @@ public class TankFrame extends Frame {
 	Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> enemies = new ArrayList<>();
+	Explode e = new  Explode(100,100, this);
+	
+	
 	static final int GAME_WIDTH = 800;
 	static final int GAME_HEIGHT = 600;
-	
-	
 	
 	public TankFrame( ) {
 		setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -75,6 +76,8 @@ public class TankFrame extends Frame {
 			for(int j = 0; j < enemies.size(); j++) 
 				bullets.get(i).collodeWith(enemies.get(j)); //碰撞检测
 		}
+		
+		e.paint(g);
 //		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
 //			Bullet b = it.next();
 //			if(!b.isLive()) it.remove();
