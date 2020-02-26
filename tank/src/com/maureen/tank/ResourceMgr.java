@@ -8,7 +8,8 @@ import javax.imageio.ImageIO;
 public class ResourceMgr {
 	public static BufferedImage tankL, tankU, tankR,tankD;
 	public static BufferedImage bulletL, bulletU, bulletR,bulletD;
-	public static BufferedImage[] explodes = new BufferedImage[16];
+	//爆炸过程有16张图
+	public static BufferedImage[] explodes = new BufferedImage[16]; 
 	
 	static { //当ResourceMgr.class文件被load到内存的时候，静态语句块自动执行，BufferedImage就被初始化了
 		try { //图片全部被load到了内存中
