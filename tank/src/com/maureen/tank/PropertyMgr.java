@@ -18,6 +18,8 @@ public class PropertyMgr {
 		if(props == null) return null;
 		return props.get(key);
 	}
+	//int getInt(key)
+	//String getString(key)
 	
 	public static void main(String[] args) {
 		System.out.println(PropertyMgr.get("initTankCount"));
