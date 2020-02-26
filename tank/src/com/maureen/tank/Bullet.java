@@ -12,6 +12,10 @@ public class Bullet {
 	
 	private boolean live = true;
 
+	public boolean isLive() {
+		return live;
+	}
+
 	private TankFrame tf = null;
 	
 	public Bullet(int x, int y, Dir dir, TankFrame tf) {
@@ -22,7 +26,6 @@ public class Bullet {
 	}
 	
 	public void paint(Graphics g) {
-		System.out.println("Bullet:paint");
 		if(!live) {
 			tf.bullets.remove(this);
 		}
@@ -34,7 +37,6 @@ public class Bullet {
 	}
 
 	private void move() {
-		System.out.println("Bullet:move");
 		switch (dir) {
 		case LEFT:
 			x -= SPEED;
