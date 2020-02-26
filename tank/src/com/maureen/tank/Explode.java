@@ -16,6 +16,8 @@ public class Explode {
 		this.x = x;
 		this.y = y;
 		this.tf  = tf;
+		
+		new Audio("audio/explode.wav").start();
 	}
 
 	public void paint(Graphics g) {
