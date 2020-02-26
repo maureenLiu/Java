@@ -63,6 +63,11 @@ public class TankFrame extends Frame {
 		for(int i = 0; i< bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		} 
+		
+//		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
+//			Bullet b = it.next();
+//			if(!b.isLive()) it.remove();
+//		}
 	}
 	
 	class MyKeyListener extends KeyAdapter {

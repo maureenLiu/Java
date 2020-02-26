@@ -12,9 +12,9 @@ public class Bullet {
 	
 	private boolean live = true;
 
-	public boolean isLive() {
-		return live;
-	}
+//	public boolean isLive() {
+//		return live;
+//	}
 
 	private TankFrame tf = null;
 	
