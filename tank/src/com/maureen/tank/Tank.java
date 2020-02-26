@@ -87,6 +87,16 @@ public class Tank {
 			this.fire();
 		if (this.group == Group.BAD && random.nextInt(100) > 95)
 			randomDir();
+		boundsCheck();
+	}
+
+	private void boundsCheck() {
+//		增加两个像素的空隙，使得更加美观
+		if(this.x < 2) x = 2;
+		if (this.y < 28) y =28;
+		if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+		if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT- Tank.HEIGHT - 2;
+		
 	}
 
 	private void randomDir() {
