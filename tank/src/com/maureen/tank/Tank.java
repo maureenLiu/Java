@@ -8,7 +8,7 @@ import java.util.Random;
 import com.maureen.tank.strategy.DefaultFireStrategy;
 import com.maureen.tank.strategy.FireStrategy;
 
-public class Tank {
+public class Tank extends GameObject{
 	private static final int SPEED = 3;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
 	public static int HEIGHT = ResourceMgr.goodTankD.getHeight();
@@ -85,10 +85,24 @@ public class Tank {
 	public boolean isMoving() {
 		return moving;
 	}
+	
+	private int preX;
+	private int preY;
 
 	private void move() {
-		if (!moving)
-			return;
+		if(this.group == Group.BAD) {
+			preX = this.x;
+			preY = this.y;
+		}
+		if (!moving) {
+			if(this.group == Group.BAD) {
+				x = preX;
+				y = preY;
+			} else {
+				return;
+			}
+		}
+			
 		switch (dir) {
 		case LEFT:
 			x -= SPEED;
@@ -132,7 +146,7 @@ public class Tank {
 
 	public void paint(Graphics g) {
 		if (!living)
-			gm.enemines.remove(this);
+			gm.remove(this);
 
 		switch (dir) {
 		case LEFT:
@@ -166,6 +180,14 @@ public class Tank {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Rectangle getRect() {
+		return rect;
+	}
+
+	public void stop() {
+		moving = false;
 	}
 
 }

@@ -2,7 +2,7 @@ package com.maureen.tank;
 
 import java.awt.Graphics;
 
-public class Explode {
+public class Explode extends GameObject {
 	public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
 	public static final int HEIGHT = ResourceMgr.explodes[0].getHeight();
 	private int x,y;
@@ -23,7 +23,7 @@ public class Explode {
 		g.drawImage(ResourceMgr.explodes[step++], x, y, null);
 		
 		if(step >= ResourceMgr.explodes.length) 
-			gm.explodes.remove(this);
+			gm.remove(this);
 	}
 	
 }

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Bullet {
+public class Bullet extends GameObject {
 	private static final int SPEED = 10;
 	
 	public static final int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -44,19 +44,21 @@ public class Bullet {
 		rect.width = this.WIDTH;
 		rect.height = this.HEIGHT;
 		
-		gm.bullets.add(this);
+		gm.add(this);
 	}
 	
-	public void collideWith(Tank tank) {
-		if(this.group == tank.getGroup()) return;
+	public boolean collideWith(Tank tank) {
+		if(this.group == tank.getGroup()) return false;
 		
 		if(rect.intersects(tank.rect)) {
 			tank.die();
 			this.die();
 			int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
 			int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-			gm.explodes.add(new Explode(eX, eY, gm));
+			gm.add(new Explode(eX, eY, gm));
+			return true;
 		}
+		return false;
 	}
 
 	private void die() {
@@ -91,7 +93,7 @@ public class Bullet {
 
 	public void paint(Graphics g) {
 		if(!living) {
-			gm.bullets.remove(this);
+			gm.remove(this);
 		}
 		switch(dir) {
 		case LEFT:
