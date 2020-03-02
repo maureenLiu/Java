@@ -12,15 +12,17 @@ public class Tank {
 	Rectangle rect = new  Rectangle();
 	
 	private Random random = new Random();
-	private int x, y;
+	int x, y;
 
-	private Dir dir = Dir.DOWN;
+	Dir dir = Dir.DOWN;
 
 	private boolean moving = true;
-	private TankFrame tf = null;
+	TankFrame tf = null;
 	private boolean living = true;
 
-	private Group group = Group.BAD;
+	Group group = Group.BAD;
+	
+	FireStrategy fs;
 
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
@@ -34,6 +36,17 @@ public class Tank {
 		rect.y = this.y;
 		rect.width = this.WIDTH;
 		rect.height = this.HEIGHT;
+		
+		if(group == Group.GOOD) {
+			String goodFSName = (String)PropertyMgr.get("goodFs");
+			try {
+				fs = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			fs = new DefaultFireStrategy();
+		}
 	}
 
 	public void die() {
@@ -42,10 +55,7 @@ public class Tank {
 	}
 
 	public void fire() {
-		int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-		int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-		tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
-
+		fs.fire(this);
 	}
 
 	public Group getGroup() {

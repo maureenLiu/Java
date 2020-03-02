@@ -43,6 +43,8 @@ public class Bullet {
 		rect.y = this.y;
 		rect.width = this.WIDTH;
 		rect.height = this.HEIGHT;
+		
+		tf.bullets.add(this);
 	}
 	
 	public void collodeWith(Tank tank) {
