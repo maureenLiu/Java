@@ -14,13 +14,10 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 	
-	Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
-	List<Bullet> bullets = new ArrayList<>();
-	List<Tank> enemies = new ArrayList<>();
-	List<Explode> explodes = new ArrayList<>();
-	
 	static final int GAME_WIDTH = 1080;
 	static final int GAME_HEIGHT = 960;
+	
+	GameModel gm = new GameModel();
 	
 	public TankFrame( ) {
 		setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -56,36 +53,7 @@ public class TankFrame extends Frame {
 	
 	@Override
 	public void paint(Graphics g) {
-		Color c = g.getColor();
-		g.setColor(Color.WHITE);
-		g.drawString("子弹的数量："+bullets.size(), 10, 60);
-		g.drawString("敌人的数量："+enemies.size(), 10, 80);
-		g.drawString("爆炸的数量："+explodes.size(), 10, 100);
-		g.setColor(c);
-		
-		myTank.paint(g);
-		for(int i = 0; i < bullets.size(); i++) {
-			bullets.get(i).paint(g);
-		} 
-		
-		for(int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).paint(g);
-		}
-		
-		for(int i = 0; i < explodes.size(); i++) {
-			explodes.get(i).paint(g);
-		}
-		
-		//Collision detect
-		for(int i =0 ; i < bullets.size(); i++) {
-			for(int j = 0; j < enemies.size(); j++) 
-				bullets.get(i).collodeWith(enemies.get(j)); 
-		}
-		
-//		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
-//			Bullet b = it.next();
-//			if(!b.isLive()) it.remove();
-//		}
+		gm.paint(g);
 	}
 	
 	class MyKeyListener extends KeyAdapter {
@@ -133,7 +101,7 @@ public class TankFrame extends Frame {
 					bD = false;
 					break;
 				case KeyEvent.VK_CONTROL:
-					myTank.fire();
+					gm.getMainTank().fire();
 					break;
 				default:
 					break;
@@ -143,13 +111,13 @@ public class TankFrame extends Frame {
 		}
 
 		private void setMainTankDir() {
-			if(!bL && !bU && !bR && !bD) myTank.setMoving(false);
+			if(!bL && !bU && !bR && !bD) gm.getMainTank().setMoving(false);
 			else {
-				myTank.setMoving(true);
-				if(bL) myTank.setDir(Dir.LEFT);
-				if(bU) myTank.setDir(Dir.UP);
-				if(bR) myTank.setDir(Dir.RIGHT);
-				if(bD) myTank.setDir(Dir.DOWN);
+				gm.getMainTank().setMoving(true);
+				if(bL) gm.getMainTank().setDir(Dir.LEFT);
+				if(bU) gm.getMainTank().setDir(Dir.UP);
+				if(bR) gm.getMainTank().setDir(Dir.RIGHT);
+				if(bD) gm.getMainTank().setDir(Dir.DOWN);
 			}
 		}
 		
