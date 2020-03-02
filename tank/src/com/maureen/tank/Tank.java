@@ -27,14 +27,12 @@ public class Tank extends GameObject{
 	
 	FireStrategy fs;
 
-	public GameModel gm;
-	public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+	public Tank(int x, int y, Dir dir, Group group) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gm = gm;
 		
 		rect.x = this.x;
 		rect.y = this.y;
@@ -51,6 +49,8 @@ public class Tank extends GameObject{
 		} else {
 			fs = new DefaultFireStrategy();
 		}
+		
+		GameModel.getInstance().add(this);
 	}
 
 	public void die() {
@@ -88,19 +88,19 @@ public class Tank extends GameObject{
 	
 	private int preX;
 	private int preY;
+	
+	public void back() {
+		x = preX;
+		y = preY;
+	}
 
 	private void move() {
-		if(this.group == Group.BAD) {
-			preX = this.x;
-			preY = this.y;
-		}
+		//记录移动之前的位置
+		preX = x;
+		preY = y;
+		
 		if (!moving) {
-			if(this.group == Group.BAD) {
-				x = preX;
-				y = preY;
-			} else {
-				return;
-			}
+			return;
 		}
 			
 		switch (dir) {
@@ -146,7 +146,7 @@ public class Tank extends GameObject{
 
 	public void paint(Graphics g) {
 		if (!living)
-			gm.remove(this);
+			GameModel.getInstance().remove(this);
 
 		switch (dir) {
 		case LEFT:

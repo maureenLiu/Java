@@ -17,7 +17,7 @@ public class TankFrame extends Frame {
 	static final int GAME_WIDTH = 1080;
 	static final int GAME_HEIGHT = 960;
 	
-	GameModel gm = new GameModel();
+	GameModel gm = GameModel.getInstance();
 	
 	public TankFrame( ) {
 		setSize(GAME_WIDTH,GAME_HEIGHT);
