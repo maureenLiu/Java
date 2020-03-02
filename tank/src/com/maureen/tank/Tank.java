@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import com.maureen.tank.strategy.DefaultFireStrategy;
+import com.maureen.tank.strategy.FireStrategy;
+
 public class Tank {
 	private static final int SPEED = 3;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
@@ -12,19 +15,19 @@ public class Tank {
 	Rectangle rect = new  Rectangle();
 	
 	private Random random = new Random();
-	int x, y;
+	public int x, y;
 
-	Dir dir = Dir.DOWN;
+	public Dir dir = Dir.DOWN;
 
 	private boolean moving = true;
 	
 	private boolean living = true;
 
-	Group group = Group.BAD;
+	public Group group = Group.BAD;
 	
 	FireStrategy fs;
 
-	GameModel gm;
+	public GameModel gm;
 	public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
 		super();
 		this.x = x;

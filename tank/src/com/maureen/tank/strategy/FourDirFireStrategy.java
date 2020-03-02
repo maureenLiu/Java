@@ -1,4 +1,10 @@
-package com.maureen.tank;
+package com.maureen.tank.strategy;
+
+import com.maureen.tank.Audio;
+import com.maureen.tank.Bullet;
+import com.maureen.tank.Dir;
+import com.maureen.tank.Group;
+import com.maureen.tank.Tank;
 
 public class FourDirFireStrategy implements FireStrategy {
 

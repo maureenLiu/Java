@@ -5,5 +5,7 @@ bulletSpeed=10
 gameWidth=1080
 gameHeight=720
 #fireStrategy
-goodFs=com.maureen.tank.FourDirFireStrategy
-badFs=com.maureen.tank.DefaultDirStrategy
+goodFs=com.maureen.tank.strategy.FourDirFireStrategy
+badFs=com.maureen.tank.strategy.DefaultDirStrategy
+#colliders
+colliders=com.mashibing.tank.cor.BulletTankCollider,com.mashibing.tank.cor.TankTankCollider
