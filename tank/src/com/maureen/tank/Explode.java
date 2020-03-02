@@ -2,7 +2,9 @@ package com.maureen.tank;
 
 import java.awt.Graphics;
 
-public class Explode {
+import com.maureen.tank.abstractfactory.BaseExplode;
+
+public class Explode extends BaseExplode{
 	public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
 	public static final int HEIGHT = ResourceMgr.explodes[0].getHeight();
 	private int x,y;

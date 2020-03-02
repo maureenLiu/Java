@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Bullet {
+import com.maureen.tank.abstractfactory.BaseBullet;
+import com.maureen.tank.abstractfactory.BaseTank;
+
+public class Bullet extends BaseBullet {
 	private static final int SPEED = 10;
 	
 	public static final int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -47,7 +50,7 @@ public class Bullet {
 		tf.bullets.add(this);
 	}
 	
-	public void collodeWith(Tank tank) {
+	public void collideWith(BaseTank tank) {
 		if(this.group == tank.getGroup()) return;
 		
 		if(rect.intersects(tank.rect)) {
@@ -55,7 +58,7 @@ public class Bullet {
 			this.die();
 			int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
 			int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-			tf.explodes.add(new Explode(eX, eY, tf));
+			tf.explodes.add(tf.gf.createExplode(eX, eY, tf));
 		}
 	}
 

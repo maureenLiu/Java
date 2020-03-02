@@ -5,11 +5,12 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Tank {
+import com.maureen.tank.abstractfactory.BaseTank;
+
+public class Tank extends BaseTank{
 	private static final int SPEED = 3;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
 	public static int HEIGHT = ResourceMgr.goodTankD.getHeight();
-	Rectangle rect = new  Rectangle();
 	
 	private Random random = new Random();
 	int x, y;
@@ -19,8 +20,6 @@ public class Tank {
 	private boolean moving = true;
 	TankFrame tf = null;
 	private boolean living = true;
-
-	Group group = Group.BAD;
 	
 	FireStrategy fs;
 
@@ -55,7 +54,16 @@ public class Tank {
 	}
 
 	public void fire() {
-		fs.fire(this);
+		//fs.fire(this);
+		int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+		int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+		
+		Dir[] dirs = Dir.values();
+		for(Dir dir : dirs) {
+			tf.gf.createBullet(bX, bY, dir, group, tf);
+		}
+		
+		if(group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 	}
 
 	public Group getGroup() {
