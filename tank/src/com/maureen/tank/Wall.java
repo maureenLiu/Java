@@ -27,4 +27,14 @@ public class Wall extends GameObject {
 
 	}
 
+	@Override
+	public int getWidth() {
+		return w;
+	}
+
+	@Override
+	public int getHeight() {
+		return h;
+	}
+
 }

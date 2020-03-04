@@ -15,7 +15,6 @@ public class Tank extends GameObject{
 	Rectangle rect = new  Rectangle();
 	
 	private Random random = new Random();
-	public int x, y;
 
 	public Dir dir = Dir.DOWN;
 
@@ -188,6 +187,16 @@ public class Tank extends GameObject{
 
 	public void stop() {
 		moving = false;
+	}
+
+	@Override
+	public int getWidth() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 
 }
