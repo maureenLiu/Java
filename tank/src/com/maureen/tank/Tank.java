@@ -3,8 +3,14 @@ package com.maureen.tank;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+import com.maureen.tank.observer.TankFireEvent;
+import com.maureen.tank.observer.TankFireHanlder;
+import com.maureen.tank.observer.TankFireObserver;
 import com.maureen.tank.strategy.DefaultFireStrategy;
 import com.maureen.tank.strategy.FireStrategy;
 
@@ -197,6 +203,14 @@ public class Tank extends GameObject{
 	@Override
 	public int getHeight() {
 		return HEIGHT;
+	}
+	
+	private List<TankFireObserver> fireObservers = Arrays.asList(new TankFireHanlder());
+	public void handleFireKey() {
+		TankFireEvent event = new TankFireEvent(this);
+		for(TankFireObserver o: fireObservers) {
+			o.actionOnFire(event);
+		}
 	}
 
 }
