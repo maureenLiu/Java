@@ -2,6 +2,13 @@ package com.maureen.tank;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +97,58 @@ public class GameModel {
 
 	public Tank getMainTank() {
 		return myTank;
+	}
+	
+	//1、第一种方式：将myTank和objects序列化，先写的就要先读，save()和load()就是这种方法的code
+	//2、第二种方式：直接将GameModel实现Serializable接口，TankFrame里直接将gm写到硬盘
+	public void save() { //Tank状态写到硬盘中
+		File f = new File("E:/tank.data");
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(f));
+			//为了写文件成功，myTank和objects都要实现Serializable接口，所以其父类GameObject实现Serializable接口
+			oos.writeObject(myTank); 
+			oos.writeObject(objects);
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+
+	public void load() { //从硬盘中load保存的tank的位置、朝向、子弹位置等
+		File f = new File("E:/tank.data");
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			//先写哪个就先读哪个
+			myTank = (Tank)ois.readObject(); 
+			objects = (List)ois.readObject();
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if(ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }
