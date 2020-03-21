@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/com/maureen/tank/net/Client.java=UTF-8
 encoding//src/com/maureen/tank/net/Server.java=UTF-8
-encoding//src/com/maureen/tank/net/TankMsgDecoder.java=UTF-8
-encoding//src/com/maureen/tank/net/TankMsgEncoder.java=UTF-8
+encoding//src/com/maureen/tank/net/TankJoinMsgDecoder.java=UTF-8
+encoding//src/com/maureen/tank/net/TankJoinMsgEncoder.java=UTF-8

@@ -47,7 +47,7 @@ class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pl = ch.pipeline();
-        pl.addLast(new TankMsgDecoder()) 
+        pl.addLast(new TankJoinMsgDecoder()) 
                 .addLast(new ServerChannelHandler());
     }
 }
@@ -62,7 +62,7 @@ class ServerChannelHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception { 
         System.out.println("channelRead");
         try {
-            TankMsg tm = (TankMsg) msg;
+            TankJoinMsg tm = (TankJoinMsg) msg;
             System.out.println(tm);
         } finally {
             ReferenceCountUtil.release(msg);
