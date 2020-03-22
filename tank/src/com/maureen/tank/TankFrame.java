@@ -14,6 +14,8 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 	
+	public static final TankFrame INSTANCE = new TankFrame();
+	
 	Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> enemies = new ArrayList<>();
@@ -39,7 +41,7 @@ public class TankFrame extends Frame {
 		});
 	}
 	
-	Image offScreenImage = null; //定义在内存中的图片
+	Image offScreenImage = null; //瀹氫箟鍦ㄥ唴瀛樹腑鐨勫浘鐗�
 	@Override
 	public void update(Graphics g) {
 		if(offScreenImage == null) {
@@ -58,9 +60,9 @@ public class TankFrame extends Frame {
 	public void paint(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
-		g.drawString("子弹的数量："+bullets.size(), 10, 60);
-		g.drawString("敌人的数量："+enemies.size(), 10, 80);
-		g.drawString("爆炸的数量："+explodes.size(), 10, 100);
+		g.drawString("�ӵ�����"+bullets.size(), 10, 60);
+		g.drawString("����̹������"+enemies.size(), 10, 80);
+		g.drawString("��ը��:"+explodes.size(), 10, 100);
 		g.setColor(c);
 		
 		myTank.paint(g);
@@ -153,5 +155,9 @@ public class TankFrame extends Frame {
 			}
 		}
 		
+	}
+	
+	public Tank getMainTank() {
+		return this.myTank;
 	}
 }

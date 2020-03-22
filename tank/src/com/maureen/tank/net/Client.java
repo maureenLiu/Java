@@ -1,5 +1,7 @@
 package com.maureen.tank.net;
 
+import com.maureen.tank.TankFrame;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -62,6 +64,7 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline()
                 .addLast(new TankJoinMsgEncoder())
+                .addLast(new TankJoinMsgDecoder())
                 .addLast(new ClientChannelHandler());
     }
 }
@@ -69,23 +72,11 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 class ClientChannelHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        //ByteBuf buf = Unpooled.copiedBuffer("hello".getBytes());
-        //ctx.writeAndFlush(buf);
-        ctx.writeAndFlush(new TankJoinMsg(5, 8)); 
+        ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = null;
-        try {
-            buf = (ByteBuf) msg;
-            byte[] bytes = new byte[buf.readableBytes()];
-            buf.getBytes(buf.readerIndex(), bytes);
-
-            String msgAccepted = new String(bytes);
-            //ClientFrame.INSTANCE.updateText(msgAccepted);
-        } finally {
-            if (buf != null) ReferenceCountUtil.release(buf);
-        }
+        System.out.println(msg);
     }
 }

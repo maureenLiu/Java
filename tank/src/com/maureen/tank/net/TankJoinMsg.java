@@ -1,7 +1,10 @@
 package com.maureen.tank.net;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 import com.maureen.tank.Dir;
@@ -39,13 +42,30 @@ public class TankJoinMsg { //用于网络传输的消息
 		this.id = id;
 	}
 
-
-
-	@Override
-    public String toString() {
-        return "TankMsg{" + "x=" + x + ", y=" + y + '}';
-    }
-	
+	public void parse(byte[] bytes) {
+		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
+		
+		try {
+			//TODO: 先读TYPE信息，根据TYPE信息处理不同的小
+			//略过消息类型
+			//dis.readInt();
+			this.x = dis.readInt();
+			this.y = dis.readInt();
+			this.dir = Dir.values()[dis.readInt()];
+			this.moving = dis.readBoolean();
+			this.group = group.values()[dis.readInt()];
+			this.id = new UUID(dis.readLong(), dis.readLong());
+			//this.name = dis.readUTF();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dis.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public byte[] toBytes() {//将整个消息转换成字节数组
 		ByteArrayOutputStream baos = null;
@@ -81,5 +101,22 @@ public class TankJoinMsg { //用于网络传输的消息
 		}
 		
 		return bytes;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.getClass().getName())
+				.append("[")
+				.append("uuid=" + id + " | ")
+				// .append("name=" + name + " | ")
+				.append("x=" + x + " | ")
+				.append("y=" + y + " | ")
+				.append("moving=" + moving + " | ")
+				.append("dir=" + dir + " | ")
+				.append("group=" + group + " | ")
+				.append("]");
+		return builder.toString();
+			
 	}
 }
