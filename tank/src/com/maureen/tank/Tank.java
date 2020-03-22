@@ -117,6 +117,11 @@ public class Tank {
 	public void paint(Graphics g) {
 		if (!living)
 			tf.enemies.remove(this);
+		//uuid on head
+		Color c = g.getColor();
+		g.setColor(Color.YELLOW);
+		g.drawString(id.toString(), this.x, this.y - 10);
+		g.setColor(c);
 
 		switch (dir) {
 		case LEFT:
