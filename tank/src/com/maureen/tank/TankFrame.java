@@ -11,12 +11,15 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class TankFrame extends Frame {
 	
 	public static final TankFrame INSTANCE = new TankFrame();
 	
-	Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
+	Random r = new Random();
+	//Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
+	Tank myTank = new Tank(r.nextInt(GAME_WIDTH), r.nextInt(GAME_HEIGHT), Dir.DOWN, Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> enemies = new ArrayList<>();
 	List<Explode> explodes = new ArrayList<>();

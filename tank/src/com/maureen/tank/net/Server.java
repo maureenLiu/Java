@@ -47,8 +47,9 @@ class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pl = ch.pipeline();
-        pl.addLast(new TankJoinMsgDecoder()) 
-                .addLast(new ServerChannelHandler());
+//        pl.addLast(new TankJoinMsgDecoder()) 
+//                .addLast(new ServerChannelHandler());
+        pl.addLast(new ServerChannelHandler());
     }
 }
 
