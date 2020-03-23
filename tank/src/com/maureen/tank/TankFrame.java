@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.maureen.tank.net.Client;
+import com.maureen.tank.net.TankDirChangedMsg;
 import com.maureen.tank.net.TankJoinMsg;
 import com.maureen.tank.net.TankStartMovingMsg;
 import com.maureen.tank.net.TankStopMsg;
@@ -33,7 +34,7 @@ public class TankFrame extends Frame {
 	List<Explode> explodes = new ArrayList<>();
 	
 	static final int GAME_WIDTH = 1080;
-	static final int GAME_HEIGHT = 960;
+	static final int GAME_HEIGHT = 600;//960;
 	
 	public void addTank(Tank t) {
 		enemies.put(t.getId(), t);
@@ -162,6 +163,9 @@ public class TankFrame extends Frame {
 		}
 
 		private void setMainTankDir() {
+			//save tank old dir
+			Dir dir = myTank.getDir();
+			
 			if(!bL && !bU && !bR && !bD) {
 				myTank.setMoving(false);
 				Client.INSTANCE.send(new TankStopMsg(getMainTank()));
@@ -175,6 +179,9 @@ public class TankFrame extends Frame {
 				if(!myTank.isMoving())
 					Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
 				myTank.setMoving(true);
+				
+				if(dir != myTank.getDir()) 
+					Client.INSTANCE.send(new TankDirChangedMsg(getMainTank()));
 			}
 		}
 		

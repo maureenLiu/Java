@@ -13,7 +13,7 @@ public class ServerFrame extends Frame {
     Server server = new Server();
 
     public ServerFrame() {
-        this.setSize(1600, 600);
+        this.setSize(900, 400);
         this.setLocation(300, 30);
         this.add(btnStart, BorderLayout.NORTH);
         Panel p = new Panel(new GridLayout(1, 2));
