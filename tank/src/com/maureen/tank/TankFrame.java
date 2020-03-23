@@ -19,6 +19,7 @@ import java.util.UUID;
 import com.maureen.tank.net.Client;
 import com.maureen.tank.net.TankJoinMsg;
 import com.maureen.tank.net.TankStartMovingMsg;
+import com.maureen.tank.net.TankStopMsg;
 
 public class TankFrame extends Frame {
 	
@@ -161,7 +162,10 @@ public class TankFrame extends Frame {
 		}
 
 		private void setMainTankDir() {
-			if(!bL && !bU && !bR && !bD) myTank.setMoving(false);
+			if(!bL && !bU && !bR && !bD) {
+				myTank.setMoving(false);
+				Client.INSTANCE.send(new TankStopMsg(getMainTank()));
+			}
 			else {
 				myTank.setMoving(true);
 				if(bL) myTank.setDir(Dir.LEFT);

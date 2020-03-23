@@ -30,6 +30,8 @@ public class MsgDecoder extends ByteToMessageDecoder {
         
         Msg msg = null;
         //读出字节数组的内容进行解析
+        //如果想增加新消息的时候如下这段代码不改变可以用 反射(reflection)
+        //Class.forName(msgType.toString() + "Msg").constructor().newInstance();
         switch(msgType) {
 	        case TankJoin:
 	        	msg = new TankJoinMsg();
@@ -37,6 +39,8 @@ public class MsgDecoder extends ByteToMessageDecoder {
 	        case TankStartMoving:
 	        	msg = new TankStartMovingMsg();
 	        	break;
+	        case TankStop:
+	        	msg = new TankStopMsg();
         	default:
         		break;
         }

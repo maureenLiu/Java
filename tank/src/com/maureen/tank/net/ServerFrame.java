@@ -30,7 +30,7 @@ public class ServerFrame extends Frame {
 
     public static void main(String[] args) {
         ServerFrame.INSTANCE.setVisible(true);
-        ServerFrame.INSTANCE.server.serverStart(); //在主线程，并不会UI主线程的操作
+        ServerFrame.INSTANCE.server.serverStart(); 
     }
 
     public void updateServerMsg(String s) {
