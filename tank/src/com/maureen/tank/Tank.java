@@ -21,7 +21,7 @@ public class Tank {
 	private int x, y;
 
 	private Dir dir = Dir.DOWN;
-	private boolean moving = true;
+	private boolean moving = false;
 
 	private TankFrame tf = null;
 

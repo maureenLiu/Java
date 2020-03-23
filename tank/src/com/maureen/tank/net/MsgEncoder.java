@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-public class TankJoinMsgEncoder extends MessageToByteEncoder<Msg> { //MessageToByteEncoder<TankMsg>:灏員ankMsg娑堟伅杞崲鎴愬瓧鑺�
+public class MsgEncoder extends MessageToByteEncoder<Msg> { //MessageToByteEncoder<TankMsg>:灏員ankMsg娑堟伅杞崲鎴愬瓧鑺�
     @Override
     protected void encode(ChannelHandlerContext ctx, Msg msg, ByteBuf buf) throws Exception {
     	buf.writeInt(msg.getMsgType().ordinal()); //write Message Type

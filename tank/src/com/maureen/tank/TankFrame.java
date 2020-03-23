@@ -16,7 +16,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import com.maureen.tank.net.Client;
 import com.maureen.tank.net.TankJoinMsg;
+import com.maureen.tank.net.TankStartMovingMsg;
 
 public class TankFrame extends Frame {
 	
@@ -166,6 +168,8 @@ public class TankFrame extends Frame {
 				if(bU) myTank.setDir(Dir.UP);
 				if(bR) myTank.setDir(Dir.RIGHT);
 				if(bD) myTank.setDir(Dir.DOWN);
+				//发出坦克移动的消息
+				Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
 			}
 		}
 		
