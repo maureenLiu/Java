@@ -10,8 +10,9 @@ import java.util.UUID;
 import com.maureen.tank.Dir;
 import com.maureen.tank.Group;
 import com.maureen.tank.Tank;
+import com.maureen.tank.TankFrame;
 
-public class TankJoinMsg { //用于网络传输的消息
+public class TankJoinMsg extends Msg { //用于网络传输的消息
     public int x, y;
     public Dir dir;
     public boolean moving;
@@ -67,6 +68,7 @@ public class TankJoinMsg { //用于网络传输的消息
 		}
 	}
 	
+	@Override
 	public byte[] toBytes() {//将整个消息转换成字节数组
 		ByteArrayOutputStream baos = null;
 		DataOutputStream dos = null;
@@ -118,5 +120,19 @@ public class TankJoinMsg { //用于网络传输的消息
 				.append("]");
 		return builder.toString();
 			
+	}
+
+	@Override
+	public void handle() {
+		if(this.id.equals(TankFrame.INSTANCE.getMainTank().getId())
+				|| TankFrame.INSTANCE.findByUUID(this.id) != null)
+			return;
+		System.out.println(this);
+		Tank t = new Tank(this);
+		TankFrame.INSTANCE.addTank(t);
+		
+		//send a new TankJoinMsg to the new joined tank
+		Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
+		
 	}
 }
