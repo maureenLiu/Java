@@ -167,13 +167,14 @@ public class TankFrame extends Frame {
 				Client.INSTANCE.send(new TankStopMsg(getMainTank()));
 			}
 			else {
-				myTank.setMoving(true);
 				if(bL) myTank.setDir(Dir.LEFT);
 				if(bU) myTank.setDir(Dir.UP);
 				if(bR) myTank.setDir(Dir.RIGHT);
 				if(bD) myTank.setDir(Dir.DOWN);
 				//发出坦克移动的消息
-				Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
+				if(!myTank.isMoving())
+					Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
+				myTank.setMoving(true);
 			}
 		}
 		
