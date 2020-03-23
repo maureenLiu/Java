@@ -43,7 +43,8 @@ public class TankJoinMsg extends Msg { //用于网络传输的消息
 		this.id = id;
 	}
 
-	public void parse(byte[] bytes) {
+	@Override
+	public void parse(byte[] bytes) { //和toBytes()是两个方向的操作
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
 		
 		try {
@@ -134,5 +135,10 @@ public class TankJoinMsg extends Msg { //用于网络传输的消息
 		//send a new TankJoinMsg to the new joined tank
 		Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
 		
+	}
+
+	@Override
+	public MsgType getMsgType() {
+		return MsgType.TankJoin;
 	}
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.maureen.tank.Dir;
 import com.maureen.tank.Group;
+import com.maureen.tank.net.MsgType;
 import com.maureen.tank.net.TankJoinMsg;
 import com.maureen.tank.net.TankJoinMsgDecoder;
 import com.maureen.tank.net.TankJoinMsgEncoder;
@@ -24,10 +25,17 @@ class TankJoinMsgCodecTest {
 		
 		UUID id = UUID.randomUUID();
 		TankJoinMsg msg = new TankJoinMsg(5, 10, Dir.DOWN, true, Group.BAD, id);
-		ch.pipeline().addLast(new TankJoinMsgEncoder());
+		ch.pipeline()
+			.addLast(new TankJoinMsgEncoder());
 		ch.writeOutbound(msg);
 		
 		ByteBuf buf = (ByteBuf)ch.readOutbound();
+		MsgType msgType = MsgType.values()[buf.readInt()];
+		assertEquals(MsgType.TankJoin, msgType);
+		
+		int length = buf.readInt();
+		assertEquals(33, length);
+		
 		int x = buf.readInt();
 		int y = buf.readInt();
 		int dirOrdinal = buf.readInt();
@@ -51,10 +59,14 @@ class TankJoinMsgCodecTest {
 		
 		UUID id = UUID.randomUUID();
 		TankJoinMsg msg = new TankJoinMsg(5, 10, Dir.DOWN, true, Group.BAD, id);
-		ch.pipeline().addLast(new TankJoinMsgDecoder());
+		ch.pipeline()
+			.addLast(new TankJoinMsgDecoder());
 		
 		ByteBuf buf = Unpooled.buffer();
-		buf.writeBytes(msg.toBytes());
+		buf.writeInt(MsgType.TankJoin.ordinal());
+		byte[] bytes = msg.toBytes();
+		buf.writeInt(bytes.length);
+		buf.writeBytes(bytes);
 		
 		ch.writeInbound(buf.duplicate());
 		
