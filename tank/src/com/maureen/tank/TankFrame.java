@@ -9,29 +9,42 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+
+import com.maureen.tank.net.TankJoinMsg;
 
 public class TankFrame extends Frame {
 	
 	public static final TankFrame INSTANCE = new TankFrame();
 	
 	Random r = new Random();
-	//Tank myTank = new Tank(200,400,Dir.DOWN,Group.GOOD, this);
+	//Tank random location.
 	Tank myTank = new Tank(r.nextInt(GAME_WIDTH), r.nextInt(GAME_HEIGHT), Dir.DOWN, Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
-	List<Tank> enemies = new ArrayList<>();
+	Map<UUID,Tank> enemies = new HashMap<>();
 	List<Explode> explodes = new ArrayList<>();
 	
 	static final int GAME_WIDTH = 1080;
 	static final int GAME_HEIGHT = 960;
 	
-	public TankFrame( ) {
+	public void addTank(Tank t) {
+		enemies.put(t.getId(), t);
+	}
+	
+	public Tank findByUUID(UUID id) {
+		return enemies.get(id);
+	}
+	
+	private TankFrame( ) {
 		setSize(GAME_WIDTH,GAME_HEIGHT);
 		setResizable(false);
 		setTitle("Tank war");
-		setVisible(true);
+		//setVisible(true);
 		
 		this.addKeyListener(new MyKeyListener());
 		
@@ -63,19 +76,17 @@ public class TankFrame extends Frame {
 	public void paint(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
-		g.drawString("子弹数："+bullets.size(), 10, 60);
-		g.drawString("敌人坦克数："+enemies.size(), 10, 80);
-		g.drawString("爆炸数:"+explodes.size(), 10, 100);
+		g.drawString("bullets："+bullets.size(), 10, 60);
+		g.drawString("enemies："+enemies.size(), 10, 80);
+		g.drawString("explodes:"+explodes.size(), 10, 100);
 		g.setColor(c);
 		
 		myTank.paint(g);
 		for(int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		} 
-		
-		for(int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).paint(g);
-		}
+		//java8 stream api
+		enemies.values().stream().forEach((e)->e.paint(g));
 		
 		for(int i = 0; i < explodes.size(); i++) {
 			explodes.get(i).paint(g);

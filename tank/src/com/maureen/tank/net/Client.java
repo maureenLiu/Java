@@ -1,5 +1,6 @@
 package com.maureen.tank.net;
 
+import com.maureen.tank.Tank;
 import com.maureen.tank.TankFrame;
 
 import io.netty.bootstrap.Bootstrap;
@@ -76,8 +77,15 @@ class ClientChannelHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
+		if(msg.id.equals(TankFrame.INSTANCE.getMainTank().getId())
+				|| TankFrame.INSTANCE.findByUUID(msg.id) != null)
+			return;
 		System.out.println(msg);
+		Tank t = new Tank(msg);
+		TankFrame.INSTANCE.addTank(t);
 		
+		//send a new TankJoinMsg to the new joined tank
+		ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
 	}
     
 }

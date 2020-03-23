@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.util.Random;
 import java.util.UUID;
 
+import com.maureen.tank.net.TankJoinMsg;
+
 public class Tank {
 	private static final int SPEED = 3;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
@@ -25,6 +27,16 @@ public class Tank {
 
 	private boolean living = true;
 	private Group group = Group.BAD;
+	
+	public Tank(TankJoinMsg msg) {
+		this.x = msg.x;
+		this.y = msg.y;
+		this.dir = msg.dir;
+		this.moving = msg.moving;
+		this.group = msg.group;
+		this.id = msg.id;
+	}
+	
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
 		this.x = x;
