@@ -36,6 +36,7 @@ public class TankDiedMsg extends Msg {
 			b.die();
 		}
 		
+		//TODO:Remove the died tank from Map.
 		if(this.id.equals(TankFrame.INSTANCE.getMainTank().getId()))
 			TankFrame.INSTANCE.getMainTank().die();
 		else {
