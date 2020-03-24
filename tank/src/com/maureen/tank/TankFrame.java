@@ -45,8 +45,16 @@ public class TankFrame extends Frame {
 		enemies.put(t.getId(), t);
 	}
 	
-	public Tank findByUUID(UUID id) {
+	public Tank findTankByUUID(UUID id) {
 		return enemies.get(id);
+	}
+	
+	public Bullet findBulletByUUID(UUID id) {
+		for(int i = 0; i < bullets.size(); i++) {
+			if(bullets.get(i).getId().equals(id))
+				return bullets.get(i);
+		}
+		return null;
 	}
 	
 	private TankFrame( ) {
@@ -104,8 +112,9 @@ public class TankFrame extends Frame {
 		//Collision detect
 		Collection<Tank> values = enemies.values();
 		for(int i = 0; i < bullets.size(); i++) {
-			for(Tank t: values)
+			for(Tank t: values) {
 				bullets.get(i).collodeWith(t); 
+			}
 		}
 		
 //		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
@@ -126,20 +135,25 @@ public class TankFrame extends Frame {
 			switch (key) {
 				case KeyEvent.VK_LEFT: //VK:virtual key
 					bL = true;
+					setMainTankDir();
 					break;
 				case KeyEvent.VK_UP:
 					bU = true;
+					setMainTankDir();
 					break; 
 				case KeyEvent.VK_RIGHT:
 					bR = true;
+					setMainTankDir();
 					break;
 				case KeyEvent.VK_DOWN:
 					bD = true;
+					setMainTankDir();
 					break;
 				default:
 					break;
 			}
-			setMainTankDir();
+			
+			new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 
 		@Override
@@ -148,15 +162,19 @@ public class TankFrame extends Frame {
 			switch (key) {
 				case KeyEvent.VK_LEFT: //VK:virtual key
 					bL = false;
+					setMainTankDir();
 					break;
 				case KeyEvent.VK_UP:
 					bU = false;
+					setMainTankDir();
 					break; 
 				case KeyEvent.VK_RIGHT:
 					bR = false;
+					setMainTankDir();
 					break;
 				case KeyEvent.VK_DOWN:
 					bD = false;
+					setMainTankDir();
 					break;
 				case KeyEvent.VK_CONTROL:
 					myTank.fire();
@@ -164,13 +182,10 @@ public class TankFrame extends Frame {
 				default:
 					break;
 			}
-				
-			setMainTankDir();
-			new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 
 		private void setMainTankDir() {
-			//save tank old dir
+			//save tank old direction
 			Dir dir = myTank.getDir();
 			
 			if(!bL && !bU && !bR && !bD) {
@@ -185,6 +200,7 @@ public class TankFrame extends Frame {
 				//发出坦克移动的消息
 				if(!myTank.isMoving())
 					Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
+				
 				myTank.setMoving(true);
 				
 				if(dir != myTank.getDir()) 

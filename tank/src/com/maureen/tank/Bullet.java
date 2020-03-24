@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.UUID;
 
+import com.maureen.tank.net.Client;
+import com.maureen.tank.net.TankDiedMsg;
+
 public class Bullet {
 	private static final int SPEED = 10;
 	
@@ -13,11 +16,16 @@ public class Bullet {
 	Rectangle rect = new  Rectangle();
 	
 	private UUID id = UUID.randomUUID();
+	private UUID playerId;
 	private int x,y;
 	private Dir dir;
 	private boolean living = true;
 	private TankFrame tf = null;
 	private Group group = Group.BAD;
+	
+	public UUID getPlayerId() {
+		return playerId;
+	}
 	
 	public UUID getId() {
 		return id;
@@ -67,7 +75,8 @@ public class Bullet {
 		this.group = group;
 	}
 
-	public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+	public Bullet(UUID playerId, int x, int y, Dir dir, Group group, TankFrame tf) {
+		this.playerId = playerId;
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
@@ -81,18 +90,26 @@ public class Bullet {
 	}
 	
 	public void collodeWith(Tank tank) {
-		if(this.group == tank.getGroup()) return;
-		
-		if(rect.intersects(tank.rect)) {
+//		if(this.group == tank.getGroup()) return;
+//		
+//		if(rect.intersects(tank.rect)) {
+//			tank.die();
+//			this.die();
+//			int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+//			int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+//			tf.explodes.add(new Explode(eX, eY, tf));
+//		}
+//		
+		if(this.playerId.equals(tank.getId())) 
+			return;
+		if(this.living && tank.isLiving() && this.rect.intersects(tank.rect)) {
 			tank.die();
 			this.die();
-			int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-			int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-			tf.explodes.add(new Explode(eX, eY, tf));
+			Client.INSTANCE.send(new TankDiedMsg(this.id, tank.getId()));
 		}
 	}
 
-	private void die() {
+	public void die() {
 		
 		this.living = false;
 	}

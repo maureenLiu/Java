@@ -37,6 +37,11 @@ public class Tank {
 		this.moving = msg.moving;
 		this.group = msg.group;
 		this.id = msg.id;
+		
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = WIDTH;
+		rect.height = HEIGHT;
 	}
 	
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
@@ -54,7 +59,6 @@ public class Tank {
 	}
 
 	private void boundsCheck() {
-//		澧炲姞涓や釜鍍忕礌鐨勭┖闅欙紝浣垮緱鏇村姞缇庤
 		if(this.x < 2) x = 2;
 		if (this.y < 28) y =28;
 		if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
@@ -63,16 +67,24 @@ public class Tank {
 
 	public void die() {
 		this.living = false;
-
+		int eX = this.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
+		int eY = this.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+		TankFrame.INSTANCE.explodes.add(new Explode(eX, eY));
+		
 	}
 
 	public void fire() {
 		int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
 		int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+		
 		//将子弹发射的消息传递给服务器
-		Bullet b = new Bullet(bX, bY, this.dir, this.group, this.tf);
+		Bullet b = new Bullet(this.id, bX, bY, this.dir, this.group, this.tf);
+		
 		tf.bullets.add(b);
+		
 		Client.INSTANCE.send(new BulletNewMsg(b));
+		
+		if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 	}
 
 	public Dir getDir() {
@@ -94,14 +106,20 @@ public class Tank {
 	public int getY() {
 		return y;
 	}
+	
+	public boolean isLiving() {
+		return living;
+	}
 
 	public boolean isMoving() {
 		return moving;
 	}
 
 	private void move() {
-		if (!moving)
-			return;
+		if (!living) return;
+		
+		if (!moving) return;
+		
 		switch (dir) {
 		case LEFT:
 			x -= SPEED;
@@ -130,13 +148,21 @@ public class Tank {
 	}
 
 	public void paint(Graphics g) {
-		if (!living)
-			tf.enemies.remove(this);
 		//uuid on head
 		Color c = g.getColor();
 		g.setColor(Color.YELLOW);
-		g.drawString(id.toString(), this.x, this.y - 10);
+		g.drawString(id.toString(), this.x, this.y - 20);
+		g.drawString("live=" + living, x, y - 10);
 		g.setColor(c);
+		
+		if(!living) {
+			moving = false;
+			Color cc = g.getColor();
+			g.setColor(Color.WHITE);
+			g.drawRect(x, y, WIDTH, HEIGHT);
+			g.setColor(cc);
+			return;
+		}
 
 		switch (dir) {
 		case LEFT:

@@ -25,7 +25,7 @@ public class BulletNewMsg extends Msg {
 	}
 	
 	public BulletNewMsg(Bullet bullet) {
-		this.playerId = TankFrame.INSTANCE.getMainTank().getId();
+		this.playerId = bullet.getPlayerId();
 		this.id = bullet.getId();
 		this.x = bullet.getX();
 		this.y = bullet.getY();
@@ -77,7 +77,7 @@ public class BulletNewMsg extends Msg {
 		if(this.playerId.equals(TankFrame.INSTANCE.getMainTank().getId()))
 			return;
 		
-		Bullet bullet = new Bullet(x, y, dir, group, TankFrame.INSTANCE);
+		Bullet bullet = new Bullet(this.playerId, x, y, dir, group, TankFrame.INSTANCE);
 		bullet.setId(this.id);
 		TankFrame.INSTANCE.addBullet(bullet);
 	}
@@ -162,6 +162,21 @@ public class BulletNewMsg extends Msg {
 				}
 		}
 		return bytes;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.getClass().getName())
+			   .append("[")
+			   .append("playerid=" + playerId + " | ")
+			   .append("uuid=" + id + " | ")
+			   .append("x=" + x + " | ")
+			   .append("y=" + y + " | ")
+			   .append("dir=" + dir + " | ")
+			   .append("group=" + group + " | ")
+			   .append("]");
+		return builder.toString();
 	}
 
 }

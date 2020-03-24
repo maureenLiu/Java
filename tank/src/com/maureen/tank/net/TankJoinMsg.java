@@ -126,7 +126,7 @@ public class TankJoinMsg extends Msg { //用于网络传输的消息
 	@Override
 	public void handle() {
 		if(this.id.equals(TankFrame.INSTANCE.getMainTank().getId())
-				|| TankFrame.INSTANCE.findByUUID(this.id) != null)
+				|| TankFrame.INSTANCE.findTankByUUID(this.id) != null)
 			return;
 		System.out.println(this);
 		Tank t = new Tank(this);
@@ -134,7 +134,6 @@ public class TankJoinMsg extends Msg { //用于网络传输的消息
 		
 		//send a new TankJoinMsg to the new joined tank
 		Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
-		
 	}
 
 	@Override

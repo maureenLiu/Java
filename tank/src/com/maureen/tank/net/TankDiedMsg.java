@@ -7,94 +7,70 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import com.maureen.tank.Bullet;
 import com.maureen.tank.Tank;
 import com.maureen.tank.TankFrame;
 
-public class TankStopMsg extends Msg {
+public class TankDiedMsg extends Msg {
+	UUID bulletId; //who killed me
 	UUID id;
-	int x, y;
-	
-	public TankStopMsg(Tank tank) {
-		this.id = tank.getId();
-		this.x = tank.getX();
-		this.y = tank.getY();
-	}
-	
-	public TankStopMsg(UUID id, int x, int y) {
-		super();
+
+	public TankDiedMsg(UUID playerId, UUID id) {
+		this.bulletId = playerId;
 		this.id = id;
-		this.x = x;
-		this.y = y;
 	}
 	
-	public TankStopMsg() {
+	public TankDiedMsg() {
 		
 	}
 	
-	
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
 	@Override
 	public void handle() {
-		//If this message is sent by myself,do nothing.
+		System.out.println("we got a tank die:" + id);
+		System.out.println("and my tank is:" + TankFrame.INSTANCE.getMainTank().getId());
+		Tank tt = TankFrame.INSTANCE.findTankByUUID(id);
+		System.out.println("i found a tank with this id:" + tt);
+		
+		Bullet b = TankFrame.INSTANCE.findBulletByUUID(bulletId);
+		if(b != null) {
+			b.die();
+		}
+		
 		if(this.id.equals(TankFrame.INSTANCE.getMainTank().getId()))
-			return;
-
-		Tank t= TankFrame.INSTANCE.findTankByUUID(this.id);
-		if(t != null) {
-			t.setMoving(false);
-			t.setX(this.x);
-			t.setY(this.y);
+			TankFrame.INSTANCE.getMainTank().die();
+		else {
+			Tank t = TankFrame.INSTANCE.findTankByUUID(id);
+			if(t != null) 
+				t.die();
 		}
 	}
 
 	@Override
 	public byte[] toBytes() {
-		ByteArrayOutputStream baos =null; 
-		DataOutputStream dos = null; 
+		ByteArrayOutputStream baos = null;
+		DataOutputStream dos = null;
 		byte[] bytes = null;
 		try {
 			baos = new ByteArrayOutputStream();
 			dos = new DataOutputStream(baos);
+			dos.writeLong(bulletId.getMostSignificantBits());
+			dos.writeLong(bulletId.getLeastSignificantBits());
 			dos.writeLong(id.getMostSignificantBits());
 			dos.writeLong(id.getLeastSignificantBits());
-			dos.writeInt(x);
-			dos.writeInt(y);
+			dos.flush();
 			bytes = baos.toByteArray();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(baos != null) 
+				if (baos != null)
 					baos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
-				if(dos != null)
+				if (dos != null)
 					dos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -107,38 +83,41 @@ public class TankStopMsg extends Msg {
 	public void parse(byte[] bytes) {
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
 		try {
+			this.bulletId = new UUID(dis.readLong(), dis.readLong());
 			this.id = new UUID(dis.readLong(), dis.readLong());
-			this.x = dis.readInt();
-			this.y = dis.readInt();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (dis != null)
-					dis.close();
+				dis.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
 	public MsgType getMsgType() {
-		return MsgType.TankStop;
+		return MsgType.TankDied;
+	}
+
+	public UUID getBulletId() {
+		return bulletId;
+	}
+	
+	public UUID getTankId() {
+		return id;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(this.getClass().getName())
-				.append("[")
-				.append("uuid=" + id +" | ")
-				.append("x=" + x + " | ")
-				.append("y=" + y + " | ")
-				.append("]");
+		   .append("[")
+		   .append("uuid=" + id + " | ")
+		   .append("bulletId=" + bulletId + "|")
+		   .append("id=" + id + " | ")
+		   .append("]");
 		return builder.toString();
 	}
-
-	
 }
