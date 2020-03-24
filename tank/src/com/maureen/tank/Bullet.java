@@ -3,6 +3,7 @@ package com.maureen.tank;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.UUID;
 
 public class Bullet {
 	private static final int SPEED = 10;
@@ -11,19 +12,53 @@ public class Bullet {
 	public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
 	Rectangle rect = new  Rectangle();
 	
+	private UUID id = UUID.randomUUID();
 	private int x,y;
 	private Dir dir;
-	
 	private boolean living = true;
-
-//	public boolean isLive() {
-//		return live;
-//	}
-
 	private TankFrame tf = null;
-	
 	private Group group = Group.BAD;
 	
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Dir getDir() {
+		return dir;
+	}
+
+	public void setDir(Dir dir) {
+		this.dir = dir;
+	}
+	
+	public void setLiving(boolean living) {
+		this.living = living;
+	}
+	
+	public boolean isLiving() {
+		return living;
+	}
+
 	public Group getGroup() {
 		return group;
 	}

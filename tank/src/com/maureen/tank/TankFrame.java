@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +36,10 @@ public class TankFrame extends Frame {
 	
 	static final int GAME_WIDTH = 1080;
 	static final int GAME_HEIGHT = 600;//960;
+	
+	public void addBullet(Bullet b) {
+		bullets.add(b);
+	}
 	
 	public void addTank(Tank t) {
 		enemies.put(t.getId(), t);
@@ -97,9 +102,10 @@ public class TankFrame extends Frame {
 		}
 		
 		//Collision detect
-		for(int i =0 ; i < bullets.size(); i++) {
-			for(int j = 0; j < enemies.size(); j++) 
-				bullets.get(i).collodeWith(enemies.get(j)); 
+		Collection<Tank> values = enemies.values();
+		for(int i = 0; i < bullets.size(); i++) {
+			for(Tank t: values)
+				bullets.get(i).collodeWith(t); 
 		}
 		
 //		for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
@@ -160,6 +166,7 @@ public class TankFrame extends Frame {
 			}
 				
 			setMainTankDir();
+			new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 
 		private void setMainTankDir() {

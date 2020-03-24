@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.util.Random;
 import java.util.UUID;
 
+import com.maureen.tank.net.BulletNewMsg;
+import com.maureen.tank.net.Client;
 import com.maureen.tank.net.TankJoinMsg;
 
 public class Tank {
@@ -57,7 +59,6 @@ public class Tank {
 		if (this.y < 28) y =28;
 		if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
 		if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT- Tank.HEIGHT - 2;
-		
 	}
 
 	public void die() {
@@ -68,8 +69,10 @@ public class Tank {
 	public void fire() {
 		int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
 		int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-		tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
-
+		//将子弹发射的消息传递给服务器
+		Bullet b = new Bullet(bX, bY, this.dir, this.group, this.tf);
+		tf.bullets.add(b);
+		Client.INSTANCE.send(new BulletNewMsg(b));
 	}
 
 	public Dir getDir() {
