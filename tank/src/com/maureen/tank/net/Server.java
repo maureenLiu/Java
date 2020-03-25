@@ -21,6 +21,7 @@ public class Server {
         try {
             ServerBootstrap sb = new ServerBootstrap();
             ChannelFuture future = sb.group(bossGroup, workerGroup)
+            		.option(ChannelOption.TCP_NODELAY, true) //禁用TCP Nagle算法
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ServerChannelInitializer())
                     .bind(8888)
