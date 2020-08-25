@@ -20,7 +20,7 @@
     </bean>
 
     <!-- 当通过构造器方法赋值的时候，可以把name属性值省略不写，但是要注意必须要保证参数值跟构造器的参数列表的顺序一致
-        如果想不按照参数列表的顺序，就要加index
+        如果想不按照参数列表的顺序，就要加index下标来标注，从0开始
      -->
     <bean id="person3" class="com.maureen.bean.Person">
         <constructor-arg value="3"></constructor-arg>
