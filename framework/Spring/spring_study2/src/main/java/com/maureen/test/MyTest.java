@@ -35,5 +35,7 @@ public class MyTest {
         Person person3 = context.getBean("person3", Person.class);
         System.out.println(person3);
 
+        Person person4 = context.getBean("person4", Person.class);
+        System.out.println(person4);
     }
 }

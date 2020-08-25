@@ -36,7 +36,7 @@
     <bean id="person4" class="com.maureen.bean.Person">
         <constructor-arg value="4"></constructor-arg>
         <constructor-arg value="zhaoliu"></constructor-arg>
-        <constructor-arg value="23"></constructor-arg>
+        <constructor-arg value="23" type="java.lang.Integer"></constructor-arg>
     </bean>
 
 </beans>
