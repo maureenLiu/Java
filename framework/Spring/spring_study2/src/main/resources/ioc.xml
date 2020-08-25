@@ -56,4 +56,82 @@
     <!-- 使用p命名空间给属性赋值 -->
     <bean id="person6" class="com.maureen.bean.Person" p:id="6" p:name="maliu" p:age="25" p:gender="女"/>
 
+    <!-- 给复杂类型进行赋值操作 -->
+    <bean id="person7" class="com.maureen.bean.Person">
+        <property name="id" value="7"></property>
+        <property name="name" value="maureen"></property>
+        <property name="age" value="18"></property>
+        <property name="gender" value="女"></property>
+        <!-- 给数组赋值,使用array标签-->
+        <!-- <property name="hobbies" value="book,girl,movie"></property> -->
+        <property name="hobbies">
+            <array>
+                <value>girl</value>
+                <value>book</value>
+                <value>movie</value>
+            </array>
+        </property>
+        <!-- 给引用类型赋值:可以使用ref引入外部bean-->
+        <property name="address" ref="address"></property>
+        <!--给List赋值-->
+        <!-- <property name="lists" value="1,2,3"></property> -->
+        <property name="lists">
+            <list>
+                <!--使用内部bean，无法从IoC容器中直接获取对象的值-->
+                <bean class="com.maureen.bean.Address">
+                    <property name="province" value="北京"></property>
+                </bean>
+                <bean class="com.maureen.bean.Address">
+                    <property name="province" value="上海"></property>
+                </bean>
+                <!--使用外部bean，可以随意从IoC容器获取对象的值-->
+                <ref bean="address"></ref>
+            </list>
+        </property>
+        <!--给set属性赋值-->
+        <property name="sets">
+            <set>
+                <value>张三</value>
+                <value>张三</value>
+                <value>李四</value>
+            </set>
+        </property>
+        <!--给map赋值-->
+        <property name="maps">
+            <map>
+                <entry key="a" value="aaa"></entry>
+                <entry key="address" value-ref="address"></entry>
+                <entry key="address2">
+                    <bean class="com.maureen.bean.Address">
+                        <property name="province" value="重庆"></property>
+                    </bean>
+                </entry>
+                <entry>
+                    <key>
+                        <value>hehe</value>
+                    </key>
+                    <value>haha</value>
+                </entry>
+                <entry key="list">
+                    <list>
+                        <value>11</value>
+                        <value>22</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <!--给Properties属性赋值-->
+        <property name="properties">
+            <props>
+                <prop key="111">aaa</prop>
+                <prop key="222">bbb</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="address" class="com.maureen.bean.Address">
+        <property name="province" value="广东省"></property>
+        <property name="city" value="深圳"></property>
+        <property name="town" value="南山区"></property>
+    </bean>
 </beans>
