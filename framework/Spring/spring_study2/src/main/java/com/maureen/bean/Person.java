@@ -17,6 +17,20 @@ public class Person {
         this.gender = gender;
     }
 
+    public Person(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        System.out.println("age........");
+    }
+
+    public Person(int id, String name, String gender) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        System.out.println("gender..........");
+    }
+
     public int getId() {
         return id;
     }
