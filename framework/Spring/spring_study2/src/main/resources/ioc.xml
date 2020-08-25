@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 在进行框架配置的时候，可以使用xml文件，也可以使用注解的方式。项目开发中，xml和注解一起使用。而且xml配置的方式比较完整  -->
+
     <!-- 根据属性值设置的时候，name的名称取决于setXX方法中Xx首字符小写的名称-->
     <bean id="person" class="com.maureen.bean.Person">
         <property name="id" value="1"></property>
