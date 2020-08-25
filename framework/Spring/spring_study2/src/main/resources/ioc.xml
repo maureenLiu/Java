@@ -134,4 +134,17 @@
         <property name="city" value="深圳"></property>
         <property name="town" value="南山区"></property>
     </bean>
+
+    <!--bean之间的继承关系-->
+    <!--可以使用abstract属性定义抽象bean，无法实例化-->
+    <bean id="parent" class="com.maureen.bean.Person" abstract="true">
+        <property name="id" value="1"></property>
+        <property name="name" value="maureen"></property>
+        <property name="age" value="18"></property>
+        <property name="gender" value="女"></property>
+    </bean>
+    <!--可以通过parent属性来获取父bean中的某些属性值-->
+    <bean id="son" class="com.maureen.bean.Person" parent="parent">
+        <property name="name" value="haha"></property>
+    </bean>
 </beans>

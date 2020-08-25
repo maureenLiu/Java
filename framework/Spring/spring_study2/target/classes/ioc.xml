@@ -1,13 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 在进行框架配置的时候，可以使用xml文件，也可以使用注解的方式。项目开发中，xml和注解一起使用。而且xml配置的方式比较完整  -->
+
+    <!-- 根据属性值设置的时候，name的名称取决于setXX方法中Xx首字符小写的名称-->
     <bean id="person" class="com.maureen.bean.Person">
-        <property name="id" value="2"></property>
+        <property name="id" value="1"></property>
         <property name="name" value="maureen"></property>
         <property name="age" value="18"></property>
         <property name="gender" value="女"></property>
     </bean>
 
+    <!-- 使用构造器方法的时候，参数的name属性是由构造方法的参数列表的参数名称决定的 -->
+    <!--
+        name:表示参数列表的名称
+        value:表示实际的具体值
+        type：值的类型
+        index：表示值的下标，从0开始
+    -->
+    <bean id="person2" class="com.maureen.bean.Person">
+        <constructor-arg name="id" value="2"></constructor-arg>
+        <constructor-arg name="name" value="lisi"></constructor-arg>
+        <constructor-arg name="age" value="22"></constructor-arg>
+        <constructor-arg name="gender" value="女"></constructor-arg>
+    </bean>
+
+    <!-- 当通过构造器方法赋值的时候，可以把name属性值省略不写，但是要注意必须要保证参数值跟构造器的参数列表的顺序一致
+        如果想不按照参数列表的顺序，就要加index下标来标注，从0开始
+     -->
+    <bean id="person3" class="com.maureen.bean.Person">
+        <constructor-arg value="3"></constructor-arg>
+        <constructor-arg value="男" index="3"></constructor-arg>
+        <constructor-arg value="wangwu"></constructor-arg>
+        <constructor-arg value="23"></constructor-arg>
+    </bean>
+
+    <!--当有多个相同参数的构造方法存在的时候，默认情况下是覆盖的过程，后面的构造方法会覆盖前面的构造方法
+     如果非要赋值给另外一个构造方法，可以使用type的参数来进行指定-->
+    <bean id="person4" class="com.maureen.bean.Person">
+        <constructor-arg value="4"></constructor-arg>
+        <constructor-arg value="zhaoliu"></constructor-arg>
+        <constructor-arg value="23" type="java.lang.Integer"></constructor-arg>
+    </bean>
+
+    <!--如果不修改为integer类型，那么需要type跟index组合使用-->
+    <!--    <bean id="person5" class="com.maureen.bean.Person">-->
+    <!--        <constructor-arg value="5"></constructor-arg>-->
+    <!--        <constructor-arg value="haqi"></constructor-arg>-->
+    <!--        <constructor-arg value="20" type="int" index="2"></constructor-arg>-->
+    <!--    </bean>-->
+
+    <!-- 使用p命名空间给属性赋值 -->
+    <bean id="person6" class="com.maureen.bean.Person" p:id="6" p:name="maliu" p:age="25" p:gender="女"/>
+
+    <!-- 给复杂类型进行赋值操作 -->
+    <bean id="person7" class="com.maureen.bean.Person">
+        <property name="id" value="7"></property>
+        <property name="name" value="maureen"></property>
+        <property name="age" value="18"></property>
+        <property name="gender" value="女"></property>
+        <!-- 给数组赋值,使用array标签-->
+        <!-- <property name="hobbies" value="book,girl,movie"></property> -->
+        <property name="hobbies">
+            <array>
+                <value>girl</value>
+                <value>book</value>
+                <value>movie</value>
+            </array>
+        </property>
+        <!-- 给引用类型赋值:可以使用ref引入外部bean-->
+        <property name="address" ref="address"></property>
+        <!--给List赋值-->
+        <!-- <property name="lists" value="1,2,3"></property> -->
+        <property name="lists">
+            <list>
+                <!--使用内部bean，无法从IoC容器中直接获取对象的值-->
+                <bean class="com.maureen.bean.Address">
+                    <property name="province" value="北京"></property>
+                </bean>
+                <bean class="com.maureen.bean.Address">
+                    <property name="province" value="上海"></property>
+                </bean>
+                <!--使用外部bean，可以随意从IoC容器获取对象的值-->
+                <ref bean="address"></ref>
+            </list>
+        </property>
+        <!--给set属性赋值-->
+        <property name="sets">
+            <set>
+                <value>张三</value>
+                <value>张三</value>
+                <value>李四</value>
+            </set>
+        </property>
+        <!--给map赋值-->
+        <property name="maps">
+            <map>
+                <entry key="a" value="aaa"></entry>
+                <entry key="address" value-ref="address"></entry>
+                <entry key="address2">
+                    <bean class="com.maureen.bean.Address">
+                        <property name="province" value="重庆"></property>
+                    </bean>
+                </entry>
+                <entry>
+                    <key>
+                        <value>hehe</value>
+                    </key>
+                    <value>haha</value>
+                </entry>
+                <entry key="list">
+                    <list>
+                        <value>11</value>
+                        <value>22</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <!--给Properties属性赋值-->
+        <property name="properties">
+            <props>
+                <prop key="111">aaa</prop>
+                <prop key="222">bbb</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="address" class="com.maureen.bean.Address">
+        <property name="province" value="广东省"></property>
+        <property name="city" value="深圳"></property>
+        <property name="town" value="南山区"></property>
+    </bean>
+
+    <!--bean之间的继承关系-->
+    <bean id="parent" class="com.maureen.bean.Person">
+        <property name="id" value="1"></property>
+        <property name="name" value="maureen"></property>
+        <property name="age" value="18"></property>
+        <property name="gender" value="女"></property>
+    </bean>
+    <bean id="son" class="com.maureen.bean.Person" parent="parent">
+        <property name="name" value="haha"></property>
+    </bean>
 </beans>
