@@ -14,6 +14,12 @@
     </bean>
 
     <!-- 使用构造器方法的时候，参数的name属性是由构造方法的参数列表的参数名称决定的 -->
+    <!--
+        name:表示参数列表的名称
+        value:表示实际的具体值
+        type：值的类型
+        index：表示值的下标，从0开始
+    -->
     <bean id="person2" class="com.maureen.bean.Person">
         <constructor-arg name="id" value="2"></constructor-arg>
         <constructor-arg name="name" value="lisi"></constructor-arg>
