@@ -147,4 +147,13 @@
     <bean id="son" class="com.maureen.bean.Person" parent="parent">
         <property name="name" value="haha"></property>
     </bean>
+
+    <!-- 创建bean的时候依赖关系 -->
+    <!--
+        当bean对象被创建的时候，是按照xml配置文件定义的顺序创建的，谁在前谁就先被创建
+        如果需要干扰创建的顺序，可以使用denpends-on属性
+        一般在实际工作中，不必在意bean创建的顺序，无论谁先创建，需要依赖的对象在创建完成之后都会进行赋值操作
+    -->
+    <bean id="person8" class="com.maureen.bean.Person" depends-on="address3"></bean>
+    <bean id="address3" class="com.maureen.bean.Address"></bean>
 </beans>

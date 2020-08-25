@@ -47,6 +47,5 @@ public class MyTest {
 
         Person son = context.getBean("son", Person.class);
         System.out.println(son);
-
     }
 }

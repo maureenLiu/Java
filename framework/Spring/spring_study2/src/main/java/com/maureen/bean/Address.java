@@ -5,6 +5,10 @@ public class Address {
     private String city;
     private String town;
 
+    public Address() {
+        System.out.println("Address对象创建了");
+    }
+
     public String getProvince() {
         return province;
     }
