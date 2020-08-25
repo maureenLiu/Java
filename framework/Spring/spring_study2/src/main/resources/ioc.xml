@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 在进行框架配置的时候，可以使用xml文件，也可以使用注解的方式。项目开发中，xml和注解一起使用。而且xml配置的方式比较完整  -->
@@ -46,10 +47,13 @@
     </bean>
 
     <!--如果不修改为integer类型，那么需要type跟index组合使用-->
-    <bean id="person5" class="com.maureen.bean.Person">
-        <constructor-arg value="5"></constructor-arg>
-        <constructor-arg value="haqi"></constructor-arg>
-        <constructor-arg value="20" type="int" index="2"></constructor-arg>
-    </bean>
+    <!--    <bean id="person5" class="com.maureen.bean.Person">-->
+    <!--        <constructor-arg value="5"></constructor-arg>-->
+    <!--        <constructor-arg value="haqi"></constructor-arg>-->
+    <!--        <constructor-arg value="20" type="int" index="2"></constructor-arg>-->
+    <!--    </bean>-->
+
+    <!-- 使用p命名空间给属性赋值 -->
+    <bean id="person6" class="com.maureen.bean.Person" p:id="6" p:name="maliu" p:age="25" p:gender="女"/>
 
 </beans>
