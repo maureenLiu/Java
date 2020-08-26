@@ -164,6 +164,9 @@
         在spring4.x的版本中还包含另外两种作用域（几乎不用，从来没用过，因此在5版本被淘汰了）：
            request：每次发送请求都会有一个新的对象
            session：每次会话都会有一个新的对象
+        注意：
+            如果是singleton作用域的话，每次在IoC容器创建完成之前此对象已经创建完成
+            如果是prototype作用域的话，每次是在需要用到此对象的时候才会创建（即创建Person对象的时候才会创建）
     -->
     <bean id="person9" class="com.maureen.bean.Person" scope="prototype"></bean>
 
