@@ -156,4 +156,15 @@
     -->
     <bean id="person8" class="com.maureen.bean.Person" depends-on="address3"></bean>
     <bean id="address3" class="com.maureen.bean.Address"></bean>
+
+    <!-- 设置bean对象的作用域-->
+    <!--通过scope属性可以指定当前bean的作用域：
+        singleton：单例模式，从IoC容器中获取的都是同一个对象，默认的作用域
+        prototype：多例模式，从IoC容器中获取的对象都是新创建的
+        在spring4.x的版本中还包含另外两种作用域（几乎不用，从来没用过，因此在5版本被淘汰了）：
+           request：每次发送请求都会有一个新的对象
+           session：每次会话都会有一个新的对象
+    -->
+    <bean id="person9" class="com.maureen.bean.Person" scope="prototype"></bean>
+
 </beans>

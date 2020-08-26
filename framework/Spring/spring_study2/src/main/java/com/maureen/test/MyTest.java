@@ -44,8 +44,12 @@ public class MyTest {
         Person person7 = context.getBean("person7", Person.class);
         System.out.println(person7);
 
-
         Person son = context.getBean("son", Person.class);
         System.out.println(son);
+
+        //当ioc.xml中scope为singleton时，比较结果为true；当scope为prototype时，结果为false
+        Person person9_1 = context.getBean("person9", Person.class);
+        Person person9_2 = context.getBean("person9", Person.class);
+        System.out.println(person9_1 == person9_2);
     }
 }
