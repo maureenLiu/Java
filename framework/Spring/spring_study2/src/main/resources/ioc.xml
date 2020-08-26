@@ -176,5 +176,13 @@
     <bean id="person10" class="com.maureen.factory.PersonStaticFactory" factory-method="getInstance">
         <constructor-arg value="peng"></constructor-arg>
     </bean>
-
+    <!--实例工厂：先创建工厂实例，然后调用工厂实例的方法 -->
+    <!--
+        factory-bean:表示具体工厂类的实例
+        factory-method：表示具体工厂实例的方法
+    -->
+    <bean id="instanceFactory" class="com.maureen.factory.PersonInstanceFactory"></bean>
+    <bean id="person11" class="com.maureen.bean.Person" factory-bean="instanceFactory" factory-method="getInstance">
+        <constructor-arg value="ya"></constructor-arg>
+    </bean>
 </beans>
