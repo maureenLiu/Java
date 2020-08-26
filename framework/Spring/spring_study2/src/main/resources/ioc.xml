@@ -185,4 +185,7 @@
     <bean id="person11" class="com.maureen.bean.Person" factory-bean="instanceFactory" factory-method="getInstance">
         <constructor-arg value="ya"></constructor-arg>
     </bean>
+
+    <!-- 将创建的对象交由IOC容器管理-->
+    <bean id="myFactoryBean" class="com.maureen.factory.MyFactoryBean"></bean>
 </beans>
