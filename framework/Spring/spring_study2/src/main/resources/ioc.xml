@@ -198,4 +198,6 @@
     -->
     <bean id="person12" class="com.maureen.bean.Person" init-method="init" destroy-method="destory"></bean>
 
+    <!--配置bean对象初始化方法的前后处理方法-->
+    <bean id="myBeanPostProcessor" class="com.maureen.bean.MyBeanPostProcessor"></bean>
 </beans>
