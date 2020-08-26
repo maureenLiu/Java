@@ -40,6 +40,14 @@ public class Person {
         System.out.println("gender..........");
     }
 
+    public void init() {
+        System.out.println("Person对象被初始化");
+    }
+
+    public void destory() {
+        System.out.println("Person对象被销毁");
+    }
+
     public int getId() {
         return id;
     }

@@ -188,4 +188,14 @@
 
     <!-- 将创建的对象交由IOC容器管理-->
     <bean id="myFactoryBean" class="com.maureen.factory.MyFactoryBean"></bean>
+
+    <!--Spring容器在创建对象的时候可以指定具体的初始化和销毁方法。
+            init-method: 在对象创建完成之后会调用初始化方法
+            destory-method: 在容器关闭的时候会调用销毁方法
+        初始化和销毁方法跟scope属性也是相关联的。bean生命周期表示bean的创建到销毁
+                如果bean是单例，初始化和销毁方法都会调用
+                如果bean是多例，初始化方法会调用，但销毁方法不会调用
+    -->
+    <bean id="person12" class="com.maureen.bean.Person" init-method="init" destroy-method="destory"></bean>
+
 </beans>

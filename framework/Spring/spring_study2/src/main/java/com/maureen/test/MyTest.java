@@ -58,8 +58,15 @@ public class MyTest {
         Person person11 = context.getBean("person11", Person.class);
         System.out.println(person11);
 
+        //测试实现FactoryBean来创建对象
         Person myFactoryBean = context.getBean("myFactoryBean", Person.class);
         System.out.println(myFactoryBean);
+
+        //测试bean对象的初始化和销毁方法
+        Person person12 = context.getBean("person12", Person.class);
+        System.out.println(person12);
+        //ApplicationContext没有close方法，需要使用具体的子类
+        ((ClassPathXmlApplicationContext) context).close();
 
     }
 }
