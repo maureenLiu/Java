@@ -51,5 +51,9 @@ public class MyTest {
         Person person9_1 = context.getBean("person9", Person.class);
         Person person9_2 = context.getBean("person9", Person.class);
         System.out.println(person9_1 == person9_2);
+
+        Person person10 = context.getBean("person10", Person.class);
+        System.out.println(person10);
+
     }
 }

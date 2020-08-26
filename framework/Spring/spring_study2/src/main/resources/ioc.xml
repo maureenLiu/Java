@@ -170,4 +170,11 @@
     -->
     <bean id="person9" class="com.maureen.bean.Person" scope="prototype"></bean>
 
+
+    <!--利用工厂方法创建bean-->
+    <!--静态工厂:类名.静态方法-->
+    <bean id="person10" class="com.maureen.factory.PersonStaticFactory" factory-method="getInstance">
+        <constructor-arg value="peng"></constructor-arg>
+    </bean>
+
 </beans>
