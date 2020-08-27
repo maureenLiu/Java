@@ -200,4 +200,12 @@
 
     <!--配置bean对象初始化方法的前后处理方法-->
     <bean id="myBeanPostProcessor" class="com.maureen.bean.MyBeanPostProcessor"></bean>
+
+    <!--Spring管理第三方bean-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root"></property>
+        <property name="password" value="123456"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"></property>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+    </bean>
 </beans>

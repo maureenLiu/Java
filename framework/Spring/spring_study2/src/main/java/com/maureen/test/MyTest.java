@@ -1,11 +1,14 @@
 package com.maureen.test;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.maureen.bean.Person;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.sql.SQLException;
+
 public class MyTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
         /**
          * Spring对象的获取及属性赋值方式
@@ -66,7 +69,10 @@ public class MyTest {
         Person person12 = context.getBean("person12", Person.class);
         System.out.println(person12);
         //ApplicationContext没有close方法，需要使用具体的子类
-        ((ClassPathXmlApplicationContext) context).close();
+//        ((ClassPathXmlApplicationContext) context).close();
 
+        DruidDataSource dataSource = context.getBean("dataSource", DruidDataSource.class);
+        System.out.println(dataSource);
+        System.out.println(dataSource.getConnection());
     }
 }
