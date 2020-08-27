@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--SpEL表达式语言的使用-->
+    <bean id="address" class="com.maureen.bean.Address">
+        <property name="province" value="广东"></property>
+        <property name="city" value="深圳"></property>
+        <property name="town" value="宝安"></property>
+    </bean>
+    <bean id="person" class="com.maureen.bean.Person">
+        <!--可以引入bean对象的属性-->
+        <property name="name" value="#{address.province}"></property>
+        <!--可以支持运算符的所有操作-->
+        <property name="age" value="#{12*2}"></property>
+        <!--可以引入外部bean-->
+        <property name="address" value="#{address}"></property>
+        <!--可以调用静态方法-->
+        <property name="gender" value="#{T(java.util.UUID).randomUUID().toString().substring(0,4)}"></property>
+        <!--可以调用非静态方法-->
+        <property name="hobbies" value="#{address.getCity()}"></property>
+    </bean>
+</beans>
