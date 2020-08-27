@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Spring中的自动装配-->
+    <bean id="address" class="com.maureen.bean.Address">
+        <property name="province" value="广东"></property>
+        <property name="city" value="深圳"></property>
+        <property name="town" value="宝安"></property>
+    </bean>
+    <!--在spring中可以使用自动装配的功能，spring会把某些bean注入到另外bean中，可以使用autowire属性来实现自动装配。
+    有以下几种情况：
+        default/no:不装配
+        byName:按照名称来进行装配，根据set方法(setAddress)后面的名称首字母小写决定的，不是参数列表的名称
+        byType:按照bean的类型进行装配，但是如果有多个类型相同的bean对象，就会报错，不知道选择哪个具体的类型，如果找不到，则装配null
+        constructor:按照构造器进行装配，首先按照类型进行判断，如果有多个类型相同的bean对象，再按照id去进行判断（和set方法后面的名称首字母小写相同的id)
+    -->
+    <bean id="person" class="com.maureen.bean.Person" autowire="constructor"></bean>
+</beans>

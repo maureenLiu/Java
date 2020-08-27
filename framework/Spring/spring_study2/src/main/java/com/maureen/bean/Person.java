@@ -19,6 +19,15 @@ public class Person {
         System.out.println("Person对象已经被创建");
     }
 
+    /**
+     * 有对应的构造器，在ioc2.xml中自动装配时使用constructor属性值才会装配成功
+     *
+     * @param address
+     */
+    public Person(Address address) {
+        this.address = address;
+    }
+
     public Person(int id, String name, Integer age, String gender) {
         this.id = id;
         this.name = name;
