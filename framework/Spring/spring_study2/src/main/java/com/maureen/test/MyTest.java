@@ -74,5 +74,10 @@ public class MyTest {
         DruidDataSource dataSource = context.getBean("dataSource", DruidDataSource.class);
         System.out.println(dataSource);
         System.out.println(dataSource.getConnection());
+
+        DruidDataSource dataSource2 = context.getBean("dataSource2", DruidDataSource.class);
+        System.out.println(dataSource2);
+        System.out.println(dataSource2.getConnection());
+
     }
 }
